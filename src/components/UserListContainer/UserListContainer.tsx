@@ -1,12 +1,8 @@
-import { Component } from 'react';
-import UserList from '../UserList/UserList';
+import { Component } from 'react'
+import UserList from '../UserList/UserList'
+import { UserBasic as User } from '../../types/user-types'
 
-export interface User {
-    name: string
-    username: string
-}
-
-export interface UserListContainerState {
+type UserListContainerState = {
     users: User[]
     isFetching: boolean
 }
@@ -40,10 +36,11 @@ export default class UserListContainer extends Component<
     }
 
     render() {
-
         return (
             <div>
-                <UserList users={this.state.users} />
+                <h1>User List</h1>
+
+                <UserList users={this.state.users} listLength={6} />
             </div>
         )
     }

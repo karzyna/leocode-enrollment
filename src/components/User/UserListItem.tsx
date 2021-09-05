@@ -1,4 +1,5 @@
-import { User } from '../UserListContainer/UserListContainer';
+import { UserBasic as User } from '../../types/user-types'
+import styled from 'styled-components'
 
 type UserProps = {
     user: User
@@ -6,10 +7,12 @@ type UserProps = {
 
 function UserListItem(props: UserProps) {
     return (
-      <div>
-          { props.user.name } { props.user.username }
-      </div>
-    );
-  }
+        <UserCard>
+            {props.user.name} {props.user.username}
+        </UserCard>
+    )
+}
 
-export default UserListItem;
+const UserCard = styled.div``
+
+export default UserListItem
