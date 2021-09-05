@@ -8,21 +8,33 @@ type UserListProps = {
 }
 
 function UserList(props: UserListProps) {
-
-    return props.users.length > 0 ? (
-        <List>
-            {props.users.map((user) => {
-                return <UserListItem user={user} key={user.id}></UserListItem>
-            })}
-        </List>
-    ) : (
-        <p>No users matching current search criteria found</p>
+    return (
+        <Wrapper>
+            {props.users.length > 0 ? (
+                <List>
+                    {props.users.map((user) => {
+                        return (
+                            <UserListItem
+                                user={user}
+                                key={user.id}
+                            ></UserListItem>
+                        )
+                    })}
+                </List>
+            ) : (
+                <p>No users matching current search criteria found</p>
+            )}
+        </Wrapper>
     )
 }
 
 const List = styled.ol`
     width: max-content;
+`
+const Wrapper = styled.div`
     margin: 2.5rem auto;
+    display: flex;
+    justify-content: center;
 `
 
 export default UserList

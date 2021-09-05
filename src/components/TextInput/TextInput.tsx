@@ -10,7 +10,7 @@ const TextInput = ({ name, label, ...rest }: InputProps) => {
     return (
         <div>
             {label && <label htmlFor={name}>{label}</label>}
-            <StyledInput id={name} type="text" {...rest}></StyledInput>
+            <StyledInput id={name} type="text" autoComplete="off" {...rest}></StyledInput>
         </div>
     )
 }
