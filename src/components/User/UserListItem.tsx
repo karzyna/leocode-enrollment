@@ -6,13 +6,24 @@ type UserProps = {
 }
 
 function UserListItem(props: UserProps) {
+    const { name, username } = props.user
+
     return (
         <UserCard>
-            {props.user.name} {props.user.username}
+            <Name>{name}</Name>
+            {`@${username}`}
         </UserCard>
     )
 }
 
-const UserCard = styled.div``
+const UserCard = styled.li`
+    color: #bbb;
+    line-height: 1.5rem;
+`
+
+const Name = styled.span`
+    margin: 0 0.5rem;
+    color: #000;
+`
 
 export default UserListItem

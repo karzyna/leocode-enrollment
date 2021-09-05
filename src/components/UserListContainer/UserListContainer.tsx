@@ -5,8 +5,9 @@ import { UserBasic as User } from '../../types/user-types'
 import { debounceTime, distinctUntilChanged, Subscription, Subject } from 'rxjs'
 
 type UserListContainerState = {
-    users: User[]
     isFetching: boolean
+    users: User[]
+    filteredUsers: User[]
 }
 
 export default class UserListContainer extends Component<
@@ -19,13 +20,14 @@ export default class UserListContainer extends Component<
     state: UserListContainerState = {
         isFetching: false,
         users: [],
+        filteredUsers: []
     }
 
     componentDidMount() {
         this.fetchUsers()
         this.subscription = this.onFiltering$
             .pipe(debounceTime(300), distinctUntilChanged())
-            .subscribe((name: string) => this.filterUsersByName(name))
+            .subscribe((filter: string) => this.filterUsersByName(filter))
     }
 
     componentWillUnmount() {
@@ -41,7 +43,7 @@ export default class UserListContainer extends Component<
         fetch(url)
             .then((response) => response.json())
             .then((result) => {
-                this.setState({ users: result, isFetching: false })
+                this.setState({ users: result, filteredUsers: result, isFetching: false })
             })
             .catch((e) => {
                 console.log(e)
@@ -50,16 +52,26 @@ export default class UserListContainer extends Component<
     }
 
     onFiltering = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const name = event.target.value
-        this.onFiltering$.next(name)
+        const filter = event.target.value
+        console.log(filter)
+        this.onFiltering$.next(filter)
     }
 
-    filterUsersByName = (name: string) => {
-        console.log(name)
+    filterUsersByName = (filter: string) => {
+        this.setState({ ...this.state, filteredUsers: this.state.users })
+
+        const result = this.state.users.filter((user) => {
+            const userNameLower = user.name.toLocaleLowerCase()
+            const filterLower = filter.toLocaleLowerCase()
+
+            return userNameLower.includes(filterLower)
+        })
+
+        this.setState({ ...this.state, filteredUsers: result })
     }
 
     render() {
-        const { users, isFetching } = this.state
+        const { filteredUsers, isFetching } = this.state
 
         return (
             <div>
@@ -74,7 +86,7 @@ export default class UserListContainer extends Component<
                 {isFetching ? (
                     'Fetching data, please wait'
                 ) : (
-                    <UserList users={users} />
+                    <UserList users={filteredUsers} />
                 )}
             </div>
         )

@@ -1,21 +1,28 @@
 import UserListItem from '../User/UserListItem'
 import { UserBasic as User } from '../../types/user-types'
+import styled from 'styled-components'
 
 type UserListProps = {
-    users: User[];
-    listLength?: number;
+    users: User[]
+    listLength?: number
 }
 
 function UserList(props: UserListProps) {
-    const truncatedUserList = props.users.slice(0, (props.listLength || 3));
 
-    return (
-        <div>
-            {truncatedUserList.map((user) => {
+    return props.users.length > 0 ? (
+        <List>
+            {props.users.map((user) => {
                 return <UserListItem user={user} key={user.id}></UserListItem>
             })}
-        </div>
+        </List>
+    ) : (
+        <p>Didn't found users matching current search criteria</p>
     )
 }
+
+const List = styled.ol`
+    width: max-content;
+    margin: 1rem auto;
+`
 
 export default UserList
