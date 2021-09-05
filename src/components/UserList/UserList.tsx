@@ -16,13 +16,13 @@ function UserList(props: UserListProps) {
             })}
         </List>
     ) : (
-        <p>Didn't found users matching current search criteria</p>
+        <p>No users matching current search criteria found</p>
     )
 }
 
 const List = styled.ol`
     width: max-content;
-    margin: 1rem auto;
+    margin: 2.5rem auto;
 `
 
 export default UserList

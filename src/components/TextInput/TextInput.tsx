@@ -8,13 +8,17 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const TextInput = ({ name, label, ...rest }: InputProps) => {
     return (
-        <InputWrapper>
+        <div>
             {label && <label htmlFor={name}>{label}</label>}
-            <input id={name} type="text" {...rest}></input>
-        </InputWrapper>
+            <StyledInput id={name} type="text" {...rest}></StyledInput>
+        </div>
     )
 }
 
 export default TextInput
 
-const InputWrapper = styled.div``
+const StyledInput = styled.input`
+    padding: 0.25rem 0.75rem;
+    font-size: 1.25rem;
+    min-width: 15rem;
+`

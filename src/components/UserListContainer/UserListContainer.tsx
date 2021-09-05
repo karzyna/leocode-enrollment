@@ -53,7 +53,6 @@ export default class UserListContainer extends Component<
 
     onFiltering = (event: React.ChangeEvent<HTMLInputElement>) => {
         const filter = event.target.value
-        console.log(filter)
         this.onFiltering$.next(filter)
     }
 
