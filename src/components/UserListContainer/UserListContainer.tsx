@@ -40,7 +40,7 @@ export default class UserListContainer extends Component<
             <div>
                 <h1>User List</h1>
 
-                <UserList users={this.state.users} listLength={6} />
+                <UserList users={this.state.users} />
             </div>
         )
     }
