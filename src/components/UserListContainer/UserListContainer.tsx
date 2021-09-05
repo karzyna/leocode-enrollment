@@ -1,6 +1,8 @@
 import { Component } from 'react'
 import UserList from '../UserList/UserList'
+import TextInput from '../TextInput/TextInput'
 import { UserBasic as User } from '../../types/user-types'
+import { debounceTime, distinctUntilChanged, Subscription, Subject } from 'rxjs'
 
 type UserListContainerState = {
     users: User[]
@@ -11,6 +13,9 @@ export default class UserListContainer extends Component<
     {},
     UserListContainerState
 > {
+    subscription = new Subscription()
+    onFiltering$ = new Subject<string>()
+
     state: UserListContainerState = {
         isFetching: false,
         users: [],
@@ -18,6 +23,15 @@ export default class UserListContainer extends Component<
 
     componentDidMount() {
         this.fetchUsers()
+        this.subscription = this.onFiltering$
+            .pipe(debounceTime(300), distinctUntilChanged())
+            .subscribe((name: string) => this.filterUsersByName(name))
+    }
+
+    componentWillUnmount() {
+        if (this.subscription) {
+            this.subscription.unsubscribe()
+        }
     }
 
     fetchUsers = () => {
@@ -35,12 +49,33 @@ export default class UserListContainer extends Component<
             })
     }
 
+    onFiltering = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.value
+        this.onFiltering$.next(name)
+    }
+
+    filterUsersByName = (name: string) => {
+        console.log(name)
+    }
+
     render() {
+        const { users, isFetching } = this.state
+
         return (
             <div>
                 <h1>User List</h1>
 
-                <UserList users={this.state.users} />
+                <TextInput
+                    name="userSearch"
+                    placeholder="Search by user name..."
+                    onChange={this.onFiltering}
+                />
+
+                {isFetching ? (
+                    'Fetching data, please wait'
+                ) : (
+                    <UserList users={users} />
+                )}
             </div>
         )
     }
