@@ -17,12 +17,13 @@ function UserListItem(props: UserProps) {
 }
 
 const UserCard = styled.li`
-    color: #bbb;
+    text-align: left;
     line-height: 1.5rem;
+    color: #bbb;
 `
 
 const Name = styled.span`
-    margin: 0 0.5rem;
+    margin: 0 2vw;
     color: #000;
 `
 

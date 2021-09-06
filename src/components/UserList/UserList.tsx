@@ -32,7 +32,7 @@ const List = styled.ol`
     width: max-content;
 `
 const Wrapper = styled.div`
-    margin: 2.5rem auto;
+    margin: 2rem auto 0;
     display: flex;
     justify-content: center;
 `

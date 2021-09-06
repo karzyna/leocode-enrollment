@@ -3,6 +3,7 @@ import UserList from '../UserList/UserList'
 import TextInput from '../TextInput/TextInput'
 import { UserBasic as User } from '../../types/user-types'
 import { debounceTime, distinctUntilChanged, Subscription, Subject } from 'rxjs'
+import styled from 'styled-components'
 
 type UserListContainerState = {
     isFetching: boolean
@@ -20,7 +21,7 @@ export default class UserListContainer extends Component<
     state: UserListContainerState = {
         isFetching: false,
         users: [],
-        filteredUsers: []
+        filteredUsers: [],
     }
 
     componentDidMount() {
@@ -43,7 +44,11 @@ export default class UserListContainer extends Component<
         fetch(url)
             .then((response) => response.json())
             .then((result) => {
-                this.setState({ users: result, filteredUsers: result, isFetching: false })
+                this.setState({
+                    users: result,
+                    filteredUsers: result,
+                    isFetching: false,
+                })
             })
             .catch((e) => {
                 console.log(e)
@@ -73,7 +78,7 @@ export default class UserListContainer extends Component<
         const { filteredUsers, isFetching } = this.state
 
         return (
-            <div>
+            <Wrapper>
                 <h1>User List</h1>
 
                 <TextInput
@@ -87,7 +92,12 @@ export default class UserListContainer extends Component<
                 ) : (
                     <UserList users={filteredUsers} />
                 )}
-            </div>
+            </Wrapper>
         )
     }
 }
+
+const Wrapper = styled.div`
+    min-height: calc(90vh - 10rem);
+    padding: 5vh 5vw;
+`

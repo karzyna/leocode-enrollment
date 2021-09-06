@@ -20,5 +20,4 @@ export default TextInput
 const StyledInput = styled.input`
     padding: 0.25rem 0.75rem;
     font-size: 1.25rem;
-    min-width: 15rem;
 `
