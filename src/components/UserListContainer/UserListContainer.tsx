@@ -28,7 +28,9 @@ export default class UserListContainer extends Component<
         this.fetchUsers()
         this.subscription = this.onFiltering$
             .pipe(debounceTime(300), distinctUntilChanged())
-            .subscribe((filter: string) => this.filterUsersByName(filter))
+            .subscribe((filter: string) => {
+                this.filterUsersByName(filter)
+            })
     }
 
     componentWillUnmount() {
@@ -85,12 +87,13 @@ export default class UserListContainer extends Component<
                     name="userSearch"
                     placeholder="Search by user name..."
                     onChange={this.onFiltering}
+                    data-testid="text-input"
                 />
 
                 {isFetching ? (
                     'Fetching data, please wait'
                 ) : (
-                    <UserList users={filteredUsers} />
+                    <UserList data-testid="user-list" users={filteredUsers} />
                 )}
             </Wrapper>
         )

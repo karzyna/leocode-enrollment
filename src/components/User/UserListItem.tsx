@@ -9,7 +9,7 @@ function UserListItem(props: UserProps) {
     const { name, username } = props.user
 
     return (
-        <UserCard>
+        <UserCard data-testid="user-item">
             <Name>{name}</Name>
             {`@${username}`}
         </UserCard>
